@@ -30,5 +30,7 @@ This was developed primarily around my workflow which is in neovim. With the ven
 I combined a few different development setups I saw from other plugins as well as some of the scripts from the official docker image.
 
 [Netbox Docker](https://github.com/netbox-community/netbox-docker)
+
 [netbox-config-diff](https://github.com/miaow2/netbox-config-diff/tree/develop)
+
 [netbox-acls](https://github.com/netbox-community/netbox-acls/)

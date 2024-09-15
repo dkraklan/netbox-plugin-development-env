@@ -31,7 +31,11 @@ update: netbox/.github
 .PHONY: run
 run:
 	sudo docker compose up
-	
+
+#Stop
+.PHONY: stop
+stop:
+	sudo docker compose down
 
 #Clean
 .PHONY: clean

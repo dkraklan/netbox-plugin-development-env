@@ -1,0 +1,48 @@
+
+services:
+  worker: &netbox
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        NETBOX_VERSION: ${NETBOX_VERSION-develop}
+    command: sh -c "python manage.py rqworker"
+    env_file: ./env/netbox.env
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./netbox/:/opt/netbox/
+      - ./configuration/configuration.py:/opt/netbox/netbox/netbox/configuration.py
+      - ./test-plugin/:/plugin/test-plugin/
+  netbox:
+    <<: *netbox
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - worker
+      - redis
+
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_DB=netbox
+      - POSTGRES_USER=netbox
+      - POSTGRES_PASSWORD=netbox
+    volumes:
+      - pgdata-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    command: sh -c "redis-server --appendonly yes --requirepass redis"
+    volumes:
+      - redis-data:/data
+
+volumes:
+  pgdata-data:
+    driver: local
+  redis-data:
+    driver: local #   driver: local

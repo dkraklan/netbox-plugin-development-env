@@ -11,6 +11,7 @@ git clone git@github.com:dkraklan/netbox-plugin-development-env.git
 make build
 make run
 ```
+You will now have a local instance of netbox runinng on http://127.0.0.1:8000 , username and password are defiend in the `netbox.env`file.
 
 To customize the installation edit the env file for some common options, you can also expand the `configuration.py` file. It comes pre-loaded with a test-plugin to demonstrate how it works. To get it working with your plugin you can make a new directory in the root of the project. Clone your plugin into this, edit `configuration.py` and add your plugin. Then simply `make build` and `make run`.
 

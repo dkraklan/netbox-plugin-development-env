@@ -39,10 +39,6 @@ PLUGINS = [
     "test_plugin",
 ]
 PLUGINS_CONFIG = {
-    "netbox_config_diff": {
-        "USERNAME": "foo",
-        "PASSWORD": "bar",
-    }
 }
 
 SCRIPTS_ROOT = "scripts"

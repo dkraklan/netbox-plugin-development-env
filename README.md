@@ -24,7 +24,7 @@ This was developed primarily around my workflow which is in neovim. With the ven
     "extraPaths": [
         "netbox/venv/lib/python3.10/site-packages",
         "netbox/netbox/netbox",
-        "netbox_dev/netbox/netbox"
+        "netbox/netbox"
     ]
 }
 ```

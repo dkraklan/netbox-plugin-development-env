@@ -44,3 +44,20 @@ clean:
 	rm -rf /var/lib/postgresql/data
 	docker compose down
 	docker compose rm
+
+.PHONY: migrations
+migrations: #Create migrations, use PLUGIN=plugin_name to create migrations for a plugin
+	sudo docker compose exec netbox /opt/netbox/netbox/manage.py makemigrations ${PLUGIN}
+
+.PHONY: migrate
+migrate: #Apply migrations
+	sudo docker compose exec netbox /opt/netbox/netbox/manage.py migrate
+	
+.PHONY: nbshell
+nbshell: #Run the netbox shell
+	sudo docker compose exec netbox /opt/netbox/netbox/manage.py nbshell
+	
+.PHONY: dbshell
+dbshell: #Run the database shell
+	sudo docker compose exec netbox /opt/netbox/netbox/manage.py dbshell
+	

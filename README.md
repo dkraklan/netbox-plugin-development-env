@@ -1,4 +1,4 @@
-# netbox-plugin-development-env
+[# netbox-plugin-development-env
 
 
 When developing NetBox plugins having an easily reproducible dev enviroment can be difficult. This project will provide a Docker container pre configured with NetBox and will automatically reload when changes are detected with the plugin you are working on.
@@ -11,6 +11,8 @@ git clone git@github.com:dkraklan/netbox-plugin-development-env.git
 make build
 make run
 ```
+
+To customize the installation edit the env file for some common options, you can also expand the `configuration.py` file. It comes pre-loaded with a test-plugin to demonstrate how it works. To get it working with your plugin you can make a new directory in the root of the project. Clone your plugin into this, edit `configuration.py` and add your plugin. Then simply `make build` and `make run`.
 
 ## Notes
 

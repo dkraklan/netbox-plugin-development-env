@@ -1,4 +1,4 @@
-NETBOX_VERSION=${NETBOX_VERSION:-master}
+VERSION := $(or $(NETBOX_VERSION),master)
 VENV :=$(shell pwd -P)/netbox/venv
 PYTHON :=$(shell which python3)
 
@@ -15,7 +15,7 @@ build: netbox/.git #Clone the repo Build the docker containers
 	sudo docker compose build
 	
 netbox/.git:
-	git clone --single-branch --branch=${NETBOX_VERSION} https://github.com/netbox-community/netbox.git netbox/
+	git clone --single-branch --branch=${VERSION} https://github.com/netbox-community/netbox.git netbox/
 
 .PHONY: venv
 venv: netbox/requirements.txt  #Create a virtual environment and install the requirements
@@ -38,9 +38,7 @@ stop: #Stop the containers
 .PHONY: clean
 clean: #Remove netbox files, docker containers, and postgres data
 	rm -rf netbox
-	rm -rf /var/lib/postgresql/data
-	docker compose down
-	docker compose rm
+	sudo docker compose down --volumes --rmi all
 
 .PHONY: migrations
 migrations: #Create migrations, use PLUGIN=plugin_name to create migrations for a plugin

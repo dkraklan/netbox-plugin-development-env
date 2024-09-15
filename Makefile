@@ -3,43 +3,40 @@ VENV :=$(shell pwd -P)/netbox/venv
 PYTHON :=$(shell which python3)
 
 
-#all
-.PHONY: all
-all: build install 
+PHONY: help
+help: # Show help for each of the Makefile recipes.
+	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
 
-#Build
+.PHONY: all 
+all: build install ## Build and install
+
 .PHONY: build
-build: netbox/.git
+build: netbox/.git #Clone the repo Build the docker containers
 	sudo docker compose build
 	
 netbox/.git:
 	git clone --single-branch --branch=${NETBOX_VERSION} https://github.com/netbox-community/netbox.git netbox/
 
-#venv
 .PHONY: venv
-venv: netbox/requirements.txt 
+venv: netbox/requirements.txt  #Create a virtual environment and install the requirements
 	${PYTHON} -m venv ${VENV}
 	${VENV}/bin/pip install --upgrade pip
 	${VENV}/bin/pip install -r netbox/requirements.txt
 	
-#Update
 .PHONY: update
-update: netbox/.github
+update: netbox/.github #Update the repo
 	cd netbox && git pull
 	
-#Run
 .PHONY: run
-run:
+run: #Run the containers
 	sudo docker compose up
 
-#Stop
 .PHONY: stop
-stop:
+stop: #Stop the containers
 	sudo docker compose down
 
-#Clean
 .PHONY: clean
-clean:
+clean: #Remove netbox files, docker containers, and postgres data
 	rm -rf netbox
 	rm -rf /var/lib/postgresql/data
 	docker compose down

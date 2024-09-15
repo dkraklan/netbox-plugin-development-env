@@ -1,5 +1,4 @@
 #!/bin/bash
-# Runs on every start of the NetBox Docker container
 
 # Stop when an error occures
 set -e
@@ -9,13 +8,25 @@ umask 002
 
 # Load correct Python3 env
 # shellcheck disable=SC1091
-# source /opt/netbox/venv/bin/activate
+source /opt/netbox/venv/bin/activate
+
+INSTALL_CMD="/opt/netbox/venv/bin/pip install"
+NETBOX_PLUGIN_DIR="${NETBOX_PLUGINS_DIR:-/plugins/}"
+
+if [[ $DEVELOPMENT = "true" ]]; then
+INSTALL_CMD="$INSTALL_CMD -e"
+fi
+
+for plugin in $(find $NETBOX_PLUGIN_DIR -mindepth 1 -maxdepth 1 -type d);
+do
+  $INSTALL_CMD $plugin;
+done
+
 
 # Try to connect to the DB
 DB_WAIT_TIMEOUT=${DB_WAIT_TIMEOUT-3}
 MAX_DB_WAIT_TIME=${MAX_DB_WAIT_TIME-30}
 CUR_DB_WAIT_TIME=0
-
 while [ "${CUR_DB_WAIT_TIME}" -lt "${MAX_DB_WAIT_TIME}" ]; do
   # Read and truncate connection error tracebacks to last line by default
   exec {psfd}< <(./manage.py showmigrations 2>&1)
@@ -37,7 +48,6 @@ if [ "${CUR_DB_WAIT_TIME}" -ge "${MAX_DB_WAIT_TIME}" ]; then
   echo "❌ Waited ${MAX_DB_WAIT_TIME}s or more for the DB to become ready."
   exit 1
 fi
-
 # Check if update is needed
 if ! ./manage.py migrate --check >/dev/null 2>&1; then
   echo "⚙️ Applying database migrations"
@@ -85,6 +95,6 @@ fi
 
 echo "✅ Initialisation is done."
 
-# Launch whatever is passed by docker
-# (i.e. the RUN instruction in the Dockerfile)
+## Do whatever docker passes to us
 exec "$@"
+

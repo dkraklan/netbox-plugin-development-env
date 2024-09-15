@@ -3,6 +3,7 @@
 
 When developing NetBox plugins having an easily reproducible dev enviroment can be difficult. This project will provide a Docker container pre configured with NetBox and will automatically reload when changes are detected with the plugin you are working on.
 
+The project is still young at this point and I'm using it regularly in my workflow so it will mature and stabilize with that. It's missing many configuration options for netbox, as well as some netbox features likely dont work related to media and jobs. It's not meant to be used for any sort of production netbox installation. 
 ## Install
 
 ### Quickstart

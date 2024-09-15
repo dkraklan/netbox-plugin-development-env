@@ -1,4 +1,4 @@
-NETBOX_VERSION=master
+NETBOX_VERSION=${NETBOX_VERSION:-master}
 VENV :=$(shell pwd -P)/netbox/venv
 PYTHON :=$(shell which python3)
 
@@ -10,7 +10,7 @@ all: build install
 #Build
 .PHONY: build
 build: netbox/.git
-	docker compose build
+	sudo docker compose build
 	
 netbox/.git:
 	git clone --single-branch --branch=${NETBOX_VERSION} https://github.com/netbox-community/netbox.git netbox/

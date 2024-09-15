@@ -1,4 +1,4 @@
-[# netbox-plugin-development-env
+# netbox-plugin-development-env
 
 
 When developing NetBox plugins having an easily reproducible dev enviroment can be difficult. This project will provide a Docker container pre configured with NetBox and will automatically reload when changes are detected with the plugin you are working on.

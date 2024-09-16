@@ -36,9 +36,12 @@ DEVELOPER = os.environ.get("DEVELOPER", "true")
 INTERNAL_IPS = ("0.0.0.0", "127.0.0.1", "::1")
 
 PLUGINS = [
-    "test_plugin",
+    "netbox_acls",
 ]
 PLUGINS_CONFIG = {
+        "netbox_acls": {
+            "top_level_menu": True
+            }
 }
 
 SCRIPTS_ROOT = "scripts"

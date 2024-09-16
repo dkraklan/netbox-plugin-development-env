@@ -30,6 +30,7 @@ make run
 ```
 
 ### Migrations
+
 When you need to make further migrations during devleopment you can do that with the make options.
 ```bash
 make migrations #Generate core migrations
@@ -45,7 +46,7 @@ make nbshell
 
 ## Notes
 
-This was developed primarily around my workflow which is in neovim. With the venv being built inside the docker container your IDE won't have access to the modules and won't have auto completion for them. To get around this I created an option in the make file `make venv` this will build the venv and install all required modules. To get this working with PyRight create a `pyrightconfig.json` file in the root of the project.
+This was developed primarily around my workflow which is in neovim. With the venv being built inside the docker container your IDE won't have access to the modules and won't have auto completion for them. To get around this I created an option in the make file `make venv` this will build the venv and install all required modules. To get this working with PyRight create a `pyrightconfig.json` file in the root of the project. When developing with neovim activate the venv before starting neovim.
 ```json
 {
     "extraPaths": [

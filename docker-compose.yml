@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        NETBOX_VERSION: latest
     command: sh -c "python manage.py rqworker"
     env_file: ./env/netbox.env
     depends_on:

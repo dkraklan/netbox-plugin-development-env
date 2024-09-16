@@ -1,4 +1,6 @@
-FROM netboxcommunity/netbox:latest
+ARG NETBOX_VERSION=latest
+
+FROM netboxcommunity/netbox:${NETBOX_VERSION}
 
 
 COPY plugins/ /plugins/

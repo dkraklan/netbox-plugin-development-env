@@ -1,3 +1,4 @@
 /netbox/
-/plugins/
+/plugins/*
+/plugins/*/
 pyrightconfig.json

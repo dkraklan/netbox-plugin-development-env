@@ -10,13 +10,15 @@ umask 002
 # shellcheck disable=SC1091
 source /opt/netbox/venv/bin/activate
 
-INSTALL_CMD="/opt/netbox/venv/bin/pip install"
+# Updated to use uv pip installer
+INSTALL_CMD="/usr/local/bin/uv pip install"
 NETBOX_PLUGIN_DIR="${NETBOX_PLUGINS_DIR:-/plugins/}"
 
 if [[ $DEVELOPMENT = "true" ]]; then
 INSTALL_CMD="$INSTALL_CMD -e"
 fi
 
+# Install plugins
 for plugin in $(find $NETBOX_PLUGIN_DIR -mindepth 1 -maxdepth 1 -type d);
 do
   $INSTALL_CMD $plugin;

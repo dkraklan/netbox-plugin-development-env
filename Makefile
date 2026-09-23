@@ -1,4 +1,4 @@
-VERSION := $(or $(NETBOX_VERSION),master)
+VERSION := $(or $(NETBOX_VERSION),main)
 VENV :=$(shell pwd -P)/netbox/venv
 PYTHON :=$(shell which python3)
 
